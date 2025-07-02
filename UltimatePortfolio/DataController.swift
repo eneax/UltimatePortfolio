@@ -80,7 +80,7 @@ class DataController: ObservableObject {
         let request1: NSFetchRequest<NSFetchRequestResult> = Tag.fetchRequest()
         delete(request1)
         
-        let request2: NSFetchRequest<NSFetchRequestResult> = Tag.fetchRequest()
+        let request2: NSFetchRequest<NSFetchRequestResult> = Issue.fetchRequest()
         delete(request2)
         
         save()
