@@ -7,6 +7,15 @@
 
 import CoreData
 
+enum SortType: String {
+    case dateCreated = "creationDate"
+    case dateModified = "modificationDate"
+}
+
+enum Status {
+    case all, open, closed
+}
+
 class DataController: ObservableObject {
     let container: NSPersistentCloudKitContainer
     
@@ -15,6 +24,12 @@ class DataController: ObservableObject {
     
     @Published var filterText = ""
     @Published var filterTokens = [Tag]()
+    
+    @Published var filterEnabled = false
+    @Published var filterPriority = -1
+    @Published var filterStatus = Status.all
+    @Published var sortType = SortType.dateCreated
+    @Published var sortNewestFirst = true
     
     private var saveTask: Task<Void, Error>?
     
