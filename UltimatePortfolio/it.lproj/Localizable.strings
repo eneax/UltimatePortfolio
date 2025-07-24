@@ -1,0 +1,102 @@
+/* 
+  Localizable.strings
+  UltimatePortfolio
+
+  Created by Enea Xharja on 23.07.25.
+  
+*/
+
+/* GENERAL STRINGS */
+"OK" = "OK";
+"Cancel" = "Annulla";
+"Delete" = "Elimina";
+"Rename" = "Rinomina";
+"Actions" = "Azioni";
+
+
+
+/* SIDEBARVIEW */
+"Filters" = "Filtri";
+"Smart Filters" = "Filtri Smart";
+"All Issues" = "Tutte le attività";
+"Recent Issues" = "Attività recenti";
+"Tags" = "Tag";
+"Add tag" = "Aggiungi tag";
+"Show awards" = "Mostra premi";
+
+"Rename tag" = "Rinomina tag";
+"New name" = "Nuovo nome";
+
+
+
+/* CONTENTVIEW */
+"Issues" = "Attività";
+
+/* A button that shows a menu with the following options */
+"Filter" = "Filtro";
+"Turn Filter On" = "Attiva Filtro"; /* Enables filtering */
+"Turn Filter Off" = "Rimuovi Filtro"; /* Disables filtering */
+"Sort By" = "Ordina per"; /* Adjust the order issues are shown */
+"Date Created" = "Data Creazione"; /* Sort issues by the date they were created */
+"Date Modified" = "Data Modifica"; /* Sort issues by the date they were last changed */
+"Newest to Oldest" = "Dal più recente"; /* Place newer issues before older issues */
+"Oldest to Newest" = "Dal più vecchio"; /* Place older issues before newer issues */
+
+"All" = "Tutto";
+"Open" = "Aperto";
+"Closed" = "Chiuso";
+
+"Low" = "Bassa";
+"Medium" = "Media";
+"High" = "Alta";
+
+/* Create a new issue */
+"New Issue" = "Nuova attività";
+
+/* A text placeholder, to help users search */
+"Search" = "Cerca";
+
+/* Shown as a status for closed issues */
+"CLOSED" = "CHIUSO";
+
+
+
+/* DETAILSVIEW */
+"Details" = "Dettagli";
+
+
+
+/* NOISSUEVIEW */
+"No Issue Selected" = "Nessuna attività selezionata";
+
+
+
+/* ISSUEVIEW */
+"Copy Issue Title" = "Copia titolo";
+"Close Issue" = "Chiudi attività";
+"Re-open Issue" = "Riapri attività";
+
+/* Fields that let the users enter details about a specific issue */
+"Enter the issue title here" = "Inserisci titolo attività";
+"**Modified:** %@" = "**Modificato:** %@";
+"**Status:** %@" = "**Stato:** %@";
+"Priority" = "Priorità";
+"Add Tags" = "Aggiungi Tag";
+"Basic Information" = "Informazioni di base";
+"Enter the issue description here" = "Inserisci qui la descrizione del problema";
+
+
+
+/* AWARDS VIEW */
+"Awards" = "Premi";
+
+
+
+/* DATA */
+"New tag" = "Nuovo tag";
+"New issue" = "Nuova attività";
+
+
+
+/* DEBUG ONLY */
+"ADD SAMPLES" = "AGGIUNGI ESEMPI";

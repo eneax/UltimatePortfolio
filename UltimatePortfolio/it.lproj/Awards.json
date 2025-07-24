@@ -1,0 +1,162 @@
+[
+    {
+        "name": "Primi passi",
+        "description": "Aggiungi la tua prima attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 1,
+        "image": "figure.walk"
+    },
+    {
+        "name": "Un grande inizio",
+        "description": "Aggiungi 10 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 10,
+        "image": "hand.thumbsup.fill"
+    },
+    {
+        "name": "Andare avanti",
+        "description": "Aggiungi 20 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 20,
+        "image": "tray.and.arrow.up.fill"
+    },
+    {
+        "name": "Aumentare il passo",
+        "description": "Aggiungi 50 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 50,
+        "image": "speedometer"
+    },
+    {
+        "name": "Fare Scalpore",
+        "description": "Aggiungi 100 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 100,
+        "image": "dot.radiowaves.left.and.right"
+    },
+    {
+        "name": "Persona di Successo",
+        "description": "Aggiungi 250 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 250,
+        "image": "square.stack.3d.up.fill"
+    },
+    {
+        "name": "Star",
+        "description": "Aggiungi 500 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 500,
+        "image": "star.circle.fill"
+    },
+    {
+        "name": "Campione",
+        "description": "Aggiungi 1000 attività.",
+        "color": "Light Blue",
+        "criterion": "issues",
+        "value": 1000,
+        "image": "crown.fill"
+    },
+    {
+        "name": "Spunta le caselle",
+        "description": "Chiudi la prima attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 1,
+        "image": "checkmark.shield.fill"
+    },
+    {
+        "name": "Alla Grande",
+        "description": "Chiudi 10 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 10,
+        "image": "guitars.fill"
+    },
+    {
+        "name": "20 sono tanti",
+        "description": "Chiudi 20 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 20,
+        "image": "20.square.fill"
+    },
+    {
+        "name": "Obiettivo Centrato!",
+        "description": "Chiudi 50 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 50,
+        "image": "target"
+    },
+    {
+        "name": "Voli in alto",
+        "description": "Chiudi 100 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 100,
+        "image": "airplane.circle.fill"
+    },
+    {
+        "name": "Vai alla grande!",
+        "description": "Chiudi 250 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 250,
+        "image": "flame.fill"
+    },
+    {
+        "name": "Il capo",
+        "description": "Chiudi 500 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 500,
+        "image": "text.badge.checkmark"
+    },
+    {
+        "name": "Boom!",
+        "description": "Chiudi 1000 attività.",
+        "color": "Green",
+        "criterion": "closed",
+        "value": 1000,
+        "image": "bolt.circle.fill"
+    },
+    {
+        "name": "Giocare ad acchiapparella",
+        "description": "Hai creato il tuo primo tag.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 1,
+        "image": "tag.fill"
+    },
+    {
+        "name": "Tag wrestling",
+        "description": "Hai creato 10 tags.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 10,
+        "image": "tag.circle.fill"
+    },
+    {
+        "name": "Tagger Supremo",
+        "description": "Hai creato 50 tags.",
+        "color": "Gold",
+        "criterion": "tags",
+        "value": 50,
+        "image": "square.grid.3x1.folder.fill.badge.plus"
+    },
+    {
+        "name": "Sostenitore",
+        "description": "Hai acquistato il pacchetto premium.",
+        "color": "Purple",
+        "criterion": "unlock",
+        "value": 0,
+        "image": "dollarsign.square.fill"
+    }
+]
