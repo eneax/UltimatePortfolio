@@ -24,7 +24,7 @@ struct IssueView: View {
                     Text("**Modified:** \(issue.issueModificationDate.formatted(date: .long, time: .shortened))")
                         .foregroundStyle(.secondary)
                     
-                    Text("**Status:** \(issue.issueStatus)")
+                    Text("**Status:** \(String(localized: issue.issueStatusKey))")
                         .foregroundStyle(.secondary)
                 }
                 

@@ -80,6 +80,8 @@
 "Enter the issue title here" = "Enter the issue title here";
 "**Modified:** %@" = "**Modified:** %@";
 "**Status:** %@" = "**Status:** %@";
+"status.closed" = "Closed";
+"status.open" = "Open";
 "Priority" = "Priority";
 "Add Tags" = "Add Tags";
 "Basic Information" = "Basic Information";

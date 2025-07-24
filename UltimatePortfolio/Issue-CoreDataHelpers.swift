@@ -41,12 +41,8 @@ extension Issue {
         }
     }
     
-    var issueStatus: String {
-        if completed {
-            return "Closed"
-        } else {
-            return "Open"
-        }
+    var issueStatusKey: LocalizedStringResource {
+        completed ? "status.closed" : "status.open"
     }
     
     var issueFormattedCreationDate: String {

@@ -80,6 +80,8 @@
 "Enter the issue title here" = "Inserisci titolo attività";
 "**Modified:** %@" = "**Modificato:** %@";
 "**Status:** %@" = "**Stato:** %@";
+"status.closed" = "Chiuso";
+"status.open" = "Aperto";
 "Priority" = "Priorità";
 "Add Tags" = "Aggiungi Tag";
 "Basic Information" = "Informazioni di base";
