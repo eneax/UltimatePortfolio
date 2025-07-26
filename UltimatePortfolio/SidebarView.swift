@@ -63,24 +63,7 @@ struct SidebarView: View {
         }
         .navigationTitle("Filters")
         .toolbar {
-            Button(action: dataController.newTag) {
-                Label("Add tag", systemImage: "plus")
-            }
-            
-            Button {
-                showingAwards.toggle()
-            } label: {
-                Label("Show awards", systemImage: "rosette")
-            }
-            
-            #if DEBUG
-            Button {
-                dataController.deleteAll()
-                dataController.createSampleData()
-            } label: {
-                Label("ADD SAMPLES", systemImage: "flame")
-            }
-            #endif
+            SidebarViewToolbar(showingAwards: $showingAwards)
         }
         .alert("Rename tag", isPresented: $renamingTag) {
             Button("OK", action: completeRename)
