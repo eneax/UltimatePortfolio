@@ -28,6 +28,12 @@ struct IssueViewToolbar: View {
                     systemImage: "bubble.left.and.exclamationmark.bubble.right"
                 )
             }
+            
+            Divider()
+            
+            Section("Tags") {
+                TagsMenuView(issue: issue)
+            }
         } label: {
             Label("Actions", systemImage: "ellipsis.circle")
         }
