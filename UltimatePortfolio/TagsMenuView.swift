@@ -10,7 +10,7 @@ import SwiftUI
 struct TagsMenuView: View {
     @EnvironmentObject var dataController: DataController
     @ObservedObject var issue: Issue
-    
+
     var body: some View {
         Menu {
             // selected tags

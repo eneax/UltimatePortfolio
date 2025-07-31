@@ -10,7 +10,7 @@ import SwiftUI
 struct IssueRow: View {
     @EnvironmentObject var dataController: DataController
     @ObservedObject var issue: Issue
-    
+
     var body: some View {
         NavigationLink(value: issue) {
             HStack {
@@ -29,7 +29,7 @@ struct IssueRow: View {
                 }
 
                 Spacer()
-                
+
                 VStack(alignment: .trailing) {
                     Text(issue.issueFormattedCreationDate)
                         .accessibilityLabel(issue.issueCreationDate.formatted(date: .abbreviated, time: .omitted))

@@ -18,27 +18,27 @@ enum Status {
 
 class DataController: ObservableObject {
     let container: NSPersistentCloudKitContainer
-    
+
     @Published var selectedFilter: Filter? = Filter.all
     @Published var selectedIssue: Issue?
-    
+
     @Published var filterText = ""
     @Published var filterTokens = [Tag]()
-    
+
     @Published var filterEnabled = false
     @Published var filterPriority = -1
     @Published var filterStatus = Status.all
     @Published var sortType = SortType.dateCreated
     @Published var sortNewestFirst = true
-    
+
     private var saveTask: Task<Void, Error>?
-    
+
     static var preview: DataController = {
         let dataController = DataController(inMemory: true)
         dataController.createSampleData()
         return dataController
     }()
-    
+
     var suggestedFilterTokens: [Tag] {
         guard filterText.starts(with: "#") else {
             return []
@@ -53,42 +53,50 @@ class DataController: ObservableObject {
 
         return (try? container.viewContext.fetch(request).sorted()) ?? []
     }
-    
+
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "Main")
-        
+
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
-        
+
         container.viewContext.automaticallyMergesChangesFromParent = true
         container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump // inMemory > remote
-        
-        container.persistentStoreDescriptions.first?.setOption(true as NSNumber, forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey)
-        NotificationCenter.default.addObserver(forName: .NSPersistentStoreRemoteChange, object: container.persistentStoreCoordinator, queue: .main, using: remoteStoreChanged)
-        
-        container.loadPersistentStores { storeDescription, error in
+
+        container.persistentStoreDescriptions.first?.setOption(
+            true as NSNumber,
+            forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey
+        )
+        NotificationCenter.default.addObserver(
+            forName: .NSPersistentStoreRemoteChange,
+            object: container.persistentStoreCoordinator,
+            queue: .main,
+            using: remoteStoreChanged
+        )
+
+        container.loadPersistentStores { _, error in
             if let error {
                 fatalError("Fatal error loading store: \(error.localizedDescription)")
             }
         }
     }
-    
+
     func remoteStoreChanged(_ notification: Notification) {
         objectWillChange.send()
     }
-    
+
     func createSampleData() {
         let viewContext = container.viewContext
-        
-        for i in 1...5 {
+
+        for tagCounter in 1...5 {
             let tag = Tag(context: viewContext)
             tag.id = UUID()
-            tag.name = "Tag \(i)"
-            
-            for j in 1...10 {
+            tag.name = "Tag \(tagCounter)"
+
+            for issueCounter in 1...10 {
                 let issue = Issue(context: viewContext)
-                issue.title = "Issue \(i)-\(j)"
+                issue.title = "Issue \(tagCounter)-\(issueCounter)"
                 issue.content = "Description goes here"
                 issue.creationDate = .now
                 issue.completed = Bool.random()
@@ -96,18 +104,18 @@ class DataController: ObservableObject {
                 tag.addToIssues(issue)
             }
         }
-        
+
         try? viewContext.save()
     }
-    
+
     func save() {
         saveTask?.cancel()
-        
+
         if container.viewContext.hasChanges {
             try? container.viewContext.save()
         }
     }
-    
+
     func queueSave() {
         saveTask?.cancel()
 
@@ -116,33 +124,33 @@ class DataController: ObservableObject {
             save()
         }
     }
-    
+
     func delete(_ object: NSManagedObject) {
         objectWillChange.send()
         container.viewContext.delete(object)
         save()
     }
-    
+
     private func delete(_ fetchRequest: NSFetchRequest<NSFetchRequestResult>) {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         batchDeleteRequest.resultType = .resultTypeObjectIDs
-        
+
         if let delete = try? container.viewContext.execute(batchDeleteRequest) as? NSBatchDeleteResult {
             let changes = [NSDeletedObjectsKey: delete.result as? [NSManagedObjectID] ?? []]
             NSManagedObjectContext.mergeChanges(fromRemoteContextSave: changes, into: [container.viewContext])
         }
     }
-    
+
     func deleteAll() {
         let request1: NSFetchRequest<NSFetchRequestResult> = Tag.fetchRequest()
         delete(request1)
-        
+
         let request2: NSFetchRequest<NSFetchRequestResult> = Issue.fetchRequest()
         delete(request2)
-        
+
         save()
     }
-    
+
     func missingTags(from issue: Issue) -> [Tag] {
         let request = Tag.fetchRequest()
         let allTags = (try? container.viewContext.fetch(request)) ?? []
@@ -152,7 +160,7 @@ class DataController: ObservableObject {
 
         return difference.sorted()
     }
-    
+
     func issuesForSelectedFilter() -> [Issue] {
         let filter = selectedFilter ?? .all
         var predicates = [NSPredicate]()
@@ -164,21 +172,23 @@ class DataController: ObservableObject {
             let datePredicate = NSPredicate(format: "modificationDate > %@", filter.minModificationDate as NSDate)
             predicates.append(datePredicate)
         }
-        
+
         let trimmedFilterText = filterText.trimmingCharacters(in: .whitespaces)
-        
+
         if trimmedFilterText.isEmpty == false {
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
             let contentPredicate = NSPredicate(format: "content CONTAINS[c] %@", trimmedFilterText)
-            let combinedPredicate = NSCompoundPredicate(orPredicateWithSubpredicates: [titlePredicate, contentPredicate])
+            let combinedPredicate = NSCompoundPredicate(
+                orPredicateWithSubpredicates: [titlePredicate, contentPredicate]
+            )
             predicates.append(combinedPredicate)
         }
-        
+
         if filterTokens.isEmpty == false {
             let tokenPredicate = NSPredicate(format: "ANY tags IN %@", filterTokens)
             predicates.append(tokenPredicate)
         }
-        
+
         if filterEnabled {
             if filterPriority >= 0 {
                 let priorityFilter = NSPredicate(format: "priority = %d", filterPriority)
@@ -199,33 +209,33 @@ class DataController: ObservableObject {
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues
     }
-    
+
     func newTag() {
         let tag = Tag(context: container.viewContext)
         tag.id = UUID()
         tag.name = NSLocalizedString("New tag", comment: "Create a new tag")
         save()
     }
-    
+
     func newIssue() {
         let issue = Issue(context: container.viewContext)
         issue.title = NSLocalizedString("New issue", comment: "Create a new issue")
         issue.creationDate = .now
         issue.priority = 1
-        
+
         if let tag = selectedFilter?.tag {
             issue.addToTags(tag)
         }
-        
+
         save()
-        
+
         selectedIssue = issue
     }
-    
+
     func count<T>(for fetchRequest: NSFetchRequest<T>) -> Int {
         (try? container.viewContext.count(for: fetchRequest)) ?? 0
     }
-    
+
     func hasEarned(award: Award) -> Bool {
         switch award.criterion {
         case "issues":
@@ -233,20 +243,20 @@ class DataController: ObservableObject {
             let fetchRequest = Issue.fetchRequest()
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
-            
+
         case "closed":
             // returns true if they closed a certain number of issues
             let fetchRequest = Issue.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "completed = true")
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
-            
+
         case "tags":
             // return true if they created a certain number of tags
             let fetchRequest = Tag.fetchRequest()
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
-            
+
         default:
             // TBD
             return false

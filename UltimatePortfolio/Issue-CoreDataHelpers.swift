@@ -25,12 +25,12 @@ extension Issue {
     var issueModificationDate: Date {
         modificationDate ?? .now
     }
-    
+
     var issueTags: [Tag] {
         let result = tags?.allObjects as? [Tag] ?? []
         return result.sorted()
     }
-    
+
     var issueTagsList: String {
         guard let tags else { return "No tags" }
 
@@ -40,15 +40,15 @@ extension Issue {
             return issueTags.map(\.tagName).formatted()
         }
     }
-    
+
     var issueStatusKey: LocalizedStringResource {
         completed ? "status.closed" : "status.open"
     }
-    
+
     var issueFormattedCreationDate: String {
         issueCreationDate.formatted(date: .numeric, time: .omitted)
     }
-    
+
     static var example: Issue {
         let controller = DataController(inMemory: true)
         let viewContext = controller.container.viewContext
@@ -58,7 +58,7 @@ extension Issue {
         issue.content = "This is an example issue."
         issue.priority = 2
         issue.creationDate = .now
-        
+
         return issue
     }
 }
