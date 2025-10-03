@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SidebarViewToolbar: View {
     @EnvironmentObject var dataController: DataController
-    @Binding var showingAwards: Bool
+    @State private var showingAwards = false
 
     var body: some View {
         Button(action: dataController.newTag) {
@@ -21,6 +21,7 @@ struct SidebarViewToolbar: View {
         } label: {
             Label("Show awards", systemImage: "rosette")
         }
+        .sheet(isPresented: $showingAwards, content: AwardsView.init)
 
         #if DEBUG
         Button {
@@ -33,6 +34,8 @@ struct SidebarViewToolbar: View {
     }
 }
 
-#Preview {
-    SidebarViewToolbar(showingAwards: .constant(true))
+struct SidebarViewToolbar_Previews: PreviewProvider {
+    static var previews: some View {
+        SidebarViewToolbar()
+    }
 }

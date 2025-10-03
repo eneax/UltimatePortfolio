@@ -17,11 +17,10 @@ enum Status {
     case all, open, closed
 }
 
-/// An environment singleton responsible for managing the Core Data stack,
-/// including handling saving, counting fetch requests, tracking orders,
-/// and dealing with sample data.
+/// An environment singleton responsible for managing our Core Data stack, including handling saving,
+/// counting fetch requests, tracking orders, and dealing with sample data.
 class DataController: ObservableObject {
-    /// The CloudKit container used to store all our data.
+    /// The lone CloudKit container used to store all our data.
     let container: NSPersistentCloudKitContainer
 
     @Published var selectedFilter: Filter? = Filter.all
@@ -71,30 +70,32 @@ class DataController: ObservableObject {
         return managedObjectModel
     }()
 
-    /// Initializes a data controller, either in memory (for testing or previewing),
-    /// or on permanent storage (for use in regular app run).
+    /// Initializes a data controller, either in memory (for testing use such as previewing),
+    /// or on permanent storage (for use in regular app runs.)
     ///
-    /// Defaults to permanent storange.
-    /// - Parameter inMemory: Whether to store the data in memory or not.
+    /// Defaults to permanent storage.
+    /// - Parameter inMemory: Whether to store this data in temporary memory or not.
     init(inMemory: Bool = false) {
         container = NSPersistentCloudKitContainer(name: "Main", managedObjectModel: Self.model)
 
-        // For testing and previewing purposes,
-        // create a temporary in-memmory database by writing to /dev/null
-        // so data is destroyed after the app finishes runnnig.
+        // For testing and previewing purposes, we create a
+        // temporary, in-memory database by writing to /dev/null
+        // so our data is destroyed after the app finishes running.
         if inMemory {
             container.persistentStoreDescriptions.first?.url = URL(filePath: "/dev/null")
         }
 
         container.viewContext.automaticallyMergesChangesFromParent = true
-        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump // inMemory > remote
+        container.viewContext.mergePolicy = NSMergePolicy.mergeByPropertyObjectTrump
 
-        // Watch iCloud for changes to make sure the local UI
-        // is in sync when remote changes happen.
+        // Make sure that we watch iCloud for all changes to make
+        // absolutely sure we keep our local UI in sync when a
+        // remote change happens.
         container.persistentStoreDescriptions.first?.setOption(
             true as NSNumber,
             forKey: NSPersistentStoreRemoteChangeNotificationPostOptionKey
         )
+
         NotificationCenter.default.addObserver(
             forName: .NSPersistentStoreRemoteChange,
             object: container.persistentStoreCoordinator,
@@ -142,8 +143,9 @@ class DataController: ObservableObject {
         try? viewContext.save()
     }
 
-    /// Saves the Core Data context, if and only if there are changes.
-    /// This silently ignores any errors caused by saving, because all attributes are optional.
+    /// Saves our Core Data context iff there are changes. This silently ignores
+    /// any errors caused by saving, but this should be fine because
+    /// all our attributes are optional.
     func save() {
         saveTask?.cancel()
 
@@ -171,8 +173,8 @@ class DataController: ObservableObject {
         let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
         batchDeleteRequest.resultType = .resultTypeObjectIDs
 
-        // ⚠️ When performing a batch delete you need to make sure you read the result back,
-        // then merge all the changes from the result into the live view context
+        // ⚠️ When performing a batch delete we need to make sure we read the result back
+        // then merge all the changes from that result back into our live view context
         // so that the two stay in sync.
         if let delete = try? container.viewContext.execute(batchDeleteRequest) as? NSBatchDeleteResult {
             let changes = [NSDeletedObjectsKey: delete.result as? [NSManagedObjectID] ?? []]
@@ -200,8 +202,8 @@ class DataController: ObservableObject {
         return difference.sorted()
     }
 
-    /// Runs a fetch request for various predicates that filter the user's issues based on
-    /// tag, title, context text, search tokens, priority and completion status.
+    /// Runs a fetch request with various predicates that filter the user's issues based on
+    /// tag, title, and content text, search tokens, priority, and completion status.
     /// - Returns: An array of all matching issues.
     func issuesForSelectedFilter() -> [Issue] {
         let filter = selectedFilter ?? .all
@@ -220,15 +222,19 @@ class DataController: ObservableObject {
         if trimmedFilterText.isEmpty == false {
             let titlePredicate = NSPredicate(format: "title CONTAINS[c] %@", trimmedFilterText)
             let contentPredicate = NSPredicate(format: "content CONTAINS[c] %@", trimmedFilterText)
+
             let combinedPredicate = NSCompoundPredicate(
                 orPredicateWithSubpredicates: [titlePredicate, contentPredicate]
             )
+
             predicates.append(combinedPredicate)
         }
 
         if filterTokens.isEmpty == false {
-            let tokenPredicate = NSPredicate(format: "ANY tags IN %@", filterTokens)
-            predicates.append(tokenPredicate)
+            for filterToken in filterTokens {
+                let tokenPredicate = NSPredicate(format: "tags CONTAINS %@", filterToken)
+                predicates.append(tokenPredicate)
+            }
         }
 
         if filterEnabled {
@@ -247,7 +253,6 @@ class DataController: ObservableObject {
         let request = Issue.fetchRequest()
         request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: predicates)
         request.sortDescriptors = [NSSortDescriptor(key: sortType.rawValue, ascending: sortNewestFirst)]
-
         let allIssues = (try? container.viewContext.fetch(request)) ?? []
         return allIssues
     }
@@ -265,9 +270,9 @@ class DataController: ObservableObject {
         issue.creationDate = .now
         issue.priority = 1
 
-        // If you are currently browsing a user-created tag,
-        // immediately add this new issue to the tag
-        // otherwise it won't appear in the list of issues.
+        // If we are currently browsing a user-created tag, immediately
+        // add this new issue to the tag otherwise it won't appear in
+        // the list of issues they see.
         if let tag = selectedFilter?.tag {
             issue.addToTags(tag)
         }
@@ -284,13 +289,13 @@ class DataController: ObservableObject {
     func hasEarned(award: Award) -> Bool {
         switch award.criterion {
         case "issues":
-            // returns true if they added a certain number of issues
+            // return true if they added a certain number of issues
             let fetchRequest = Issue.fetchRequest()
             let awardCount = count(for: fetchRequest)
             return awardCount >= award.value
 
         case "closed":
-            // returns true if they closed a certain number of issues
+            // return true if they closed a certain number of issues
             let fetchRequest = Issue.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "completed = true")
             let awardCount = count(for: fetchRequest)
@@ -303,7 +308,8 @@ class DataController: ObservableObject {
             return awardCount >= award.value
 
         default:
-            // TBD
+            // an unknown award criterion; this should never be allowed
+            // fatalError("Unknown award criterion: \(award.criterion)")
             return false
         }
     }
