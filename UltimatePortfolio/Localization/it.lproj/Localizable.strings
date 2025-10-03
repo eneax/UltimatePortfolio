@@ -46,6 +46,8 @@
 "Open" = "Aperto";
 "Closed" = "Chiuso";
 
+"No Tags" = "Nessun Tag";
+
 "Low" = "Bassa";
 "Medium" = "Media";
 "High" = "Alta";
@@ -91,6 +93,9 @@
 
 /* AWARDS VIEW */
 "Awards" = "Premi";
+
+"Locked" = "Bloccato";
+"Unlocked" = "Sbloccato";
 
 
 
