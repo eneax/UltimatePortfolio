@@ -15,16 +15,13 @@ struct IssueView: View {
         Form {
             Section {
                 VStack(alignment: .leading) {
-                    TextField("Title",
-                        text: $issue.issueTitle,
-                        prompt: Text("Enter the issue title here")
-                    )
-                    .font(.title)
+                    TextField("Title", text: $issue.issueTitle, prompt: Text("Enter the issue title here"))
+                        .font(.title)
 
                     Text("**Modified:** \(issue.issueModificationDate.formatted(date: .long, time: .shortened))")
                         .foregroundStyle(.secondary)
 
-                    Text("**Status:** \(String(localized: issue.issueStatusKey))")
+                    Text("**Status:** \(issue.issueStatus)")
                         .foregroundStyle(.secondary)
                 }
 
@@ -43,7 +40,8 @@ struct IssueView: View {
                         .font(.title2)
                         .foregroundStyle(.secondary)
 
-                    TextField("Description",
+                    TextField(
+                        "Description",
                         text: $issue.issueContent,
                         prompt: Text("Enter the issue description here"),
                         axis: .vertical
@@ -62,6 +60,8 @@ struct IssueView: View {
     }
 }
 
-#Preview {
-    IssueView(issue: .example)
+struct IssueView_Previews: PreviewProvider {
+    static var previews: some View {
+        IssueView(issue: .example)
+    }
 }

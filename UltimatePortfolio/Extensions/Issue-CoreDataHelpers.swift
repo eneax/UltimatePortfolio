@@ -41,12 +41,12 @@ extension Issue {
         }
     }
 
-    var issueStatusKey: LocalizedStringResource {
-        completed ? "status.closed" : "status.open"
-    }
-
-    var issueFormattedCreationDate: String {
-        issueCreationDate.formatted(date: .numeric, time: .omitted)
+    var issueStatus: String {
+        if completed {
+            return "Closed"
+        } else {
+            return "Open"
+        }
     }
 
     static var example: Issue {
@@ -58,7 +58,6 @@ extension Issue {
         issue.content = "This is an example issue."
         issue.priority = 2
         issue.creationDate = .now
-
         return issue
     }
 }
