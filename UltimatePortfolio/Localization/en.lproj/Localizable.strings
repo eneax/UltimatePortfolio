@@ -46,7 +46,7 @@
 "Open" = "Open";
 "Closed" = "Closed";
 
-"No Tags" = "No Tags";
+"No tags" = "No tags";
 
 "Low" = "Low";
 "Medium" = "Medium";
@@ -66,12 +66,8 @@
 /* DETAILSVIEW */
 "Details" = "Details";
 
-
-
 /* NOISSUEVIEW */
 "No Issue Selected" = "No Issue Selected";
-
-
 
 /* ISSUEVIEW */
 "Copy Issue Title" = "Copy Issue Title";
@@ -82,8 +78,6 @@
 "Enter the issue title here" = "Enter the issue title here";
 "**Modified:** %@" = "**Modified:** %@";
 "**Status:** %@" = "**Status:** %@";
-"status.closed" = "Closed";
-"status.open" = "Open";
 "Priority" = "Priority";
 "Add Tags" = "Add Tags";
 "Basic Information" = "Basic Information";
@@ -95,7 +89,7 @@
 "Awards" = "Awards";
 
 "Locked" = "Locked";
-"Unlocked" = "Unlocked";
+"Unlocked: %@" = "Unlocked: %@";
 
 
 

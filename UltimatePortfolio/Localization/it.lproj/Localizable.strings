@@ -46,7 +46,7 @@
 "Open" = "Aperto";
 "Closed" = "Chiuso";
 
-"No Tags" = "Nessun Tag";
+"No tags" = "Nessun tag";
 
 "Low" = "Bassa";
 "Medium" = "Media";
@@ -66,12 +66,8 @@
 /* DETAILSVIEW */
 "Details" = "Dettagli";
 
-
-
 /* NOISSUEVIEW */
 "No Issue Selected" = "Nessuna attività selezionata";
-
-
 
 /* ISSUEVIEW */
 "Copy Issue Title" = "Copia titolo";
@@ -82,8 +78,6 @@
 "Enter the issue title here" = "Inserisci titolo attività";
 "**Modified:** %@" = "**Modificato:** %@";
 "**Status:** %@" = "**Stato:** %@";
-"status.closed" = "Chiuso";
-"status.open" = "Aperto";
 "Priority" = "Priorità";
 "Add Tags" = "Aggiungi Tag";
 "Basic Information" = "Informazioni di base";
@@ -95,7 +89,7 @@
 "Awards" = "Premi";
 
 "Locked" = "Bloccato";
-"Unlocked" = "Sbloccato";
+"Unlocked: %@" = "Sbloccato: %@";
 
 
 

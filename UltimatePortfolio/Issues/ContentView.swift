@@ -22,7 +22,7 @@ struct ContentView: View {
             text: $viewModel.filterText,
             tokens: $viewModel.filterTokens,
             suggestedTokens: .constant(viewModel.suggestedFilterTokens),
-            prompt: "Filter issues, or type # to add tags"
+            prompt: "Search"
         ) { tag in
             Text(tag.tagName)
         }
